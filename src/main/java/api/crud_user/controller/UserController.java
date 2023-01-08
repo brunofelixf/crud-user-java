@@ -2,7 +2,6 @@ package api.crud_user.controller;
 
 import api.crud_user.models.dto.UserDataList;
 import api.crud_user.models.dto.UserRegisterData;
-import api.crud_user.models.dto.UserUpdateData;
 import api.crud_user.repositories.UserRepository;
 import api.crud_user.models.UserModel;
 import jakarta.transaction.Transactional;
@@ -13,7 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping ("user")
@@ -30,6 +30,11 @@ public class UserController {
     @GetMapping
     public Page<UserDataList> getUser(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
         return repository.findAll(pagination).map(UserDataList::new);
+    }
+
+    @GetMapping ("/{id}")
+    public Optional<UserDataList> getUser(@PathVariable(value = "id") UUID id){
+        return  repository.findById(id).map(UserDataList::new);
     }
 
     //@PatchMapping
