@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping ("user")
@@ -23,18 +27,21 @@ public class UserController {
     private UserRepository repository;
     @PostMapping
     @Transactional
-    public void addUser (@RequestBody @Valid UserRegisterData userData){
-        repository.save(new UserModel(userData));
+    public ResponseEntity<UserModel> addUser (@RequestBody @Valid UserRegisterData userData){
+        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(new UserModel(userData)));
     }
 
     @GetMapping
-    public Page<UserDataList> getUser(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
-        return repository.findAll(pagination).map(UserDataList::new);
+    public ResponseEntity<Page<UserDataList>> getUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pagination){
+        return ResponseEntity.status(HttpStatus.OK).body( repository.findAll(pagination).map(UserDataList::new) );
     }
 
     @GetMapping ("/{id}")
-    public Optional<UserDataList> getUser(@PathVariable(value = "id") UUID id){
-        return  repository.findById(id).map(UserDataList::new);
+    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") UUID id){
+        Optional<UserDataList> userDataListOptional = repository.findById(id).map(UserDataList::new);
+        return userDataListOptional.<ResponseEntity<Object>>
+                map(userDataList -> ResponseEntity.status(HttpStatus.OK).body(userDataList))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: Usuário não encontrado"));
     }
 
     //@PatchMapping
