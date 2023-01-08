@@ -27,4 +27,19 @@ public class Address {
         this.number = address.number();
         this.city = address.city();
     }
+
+    public void updateAddress(AddressData address) {
+        if(address.street()!= null) {
+            this.street = address.street();
+        }
+        if(address.zip()!= null) {
+            this.zip = address.zip();
+        }
+        if(address.number()!= null) {
+           this.number = address.number();
+        }
+        if(address.city()!= null) {
+            this.city = address.city();
+        }
+    }
 }

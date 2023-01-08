@@ -2,6 +2,7 @@ package api.crud_user.models;
 
 import api.crud_user.models.adress.Address;
 import api.crud_user.models.dto.UserRegisterData;
+import api.crud_user.models.dto.UserUpdateData;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,5 +30,19 @@ public class UserModel {
         this.name = userData.name();
         this.birthday = userData.birthday();
         this.address = new Address(userData.address());
+    }
+
+    public void update(UserUpdateData data) {
+
+        if (data.name()!= null) {
+            this.name = data.name();
+        }
+        if(data.birthday()!= null) {
+            this.birthday = data.birthday();
+        }
+        if(data.address()!= null) {
+            this.address.updateAddress(data.address());
+        }
+
     }
 }

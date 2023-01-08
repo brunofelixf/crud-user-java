@@ -2,6 +2,7 @@ package api.crud_user.controller;
 
 import api.crud_user.models.dto.UserDataList;
 import api.crud_user.models.dto.UserRegisterData;
+import api.crud_user.models.dto.UserUpdateData;
 import api.crud_user.repositories.UserRepository;
 import api.crud_user.models.UserModel;
 import jakarta.transaction.Transactional;
@@ -44,6 +45,12 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: Usuário não encontrado"));
     }
 
-    //@PatchMapping
-    //public void updateUser (@RequestBody @Valid UserUpdateData userData){}
+    @PutMapping()
+    @Transactional
+    public ResponseEntity<Optional<UserDataList>> updateUser (@RequestBody @Valid UserUpdateData userData){
+        UserModel user = repository.getReferenceById(userData.id());
+        user.update(userData);
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findById(userData.id()).map(UserDataList::new));
+
+    }
 }
