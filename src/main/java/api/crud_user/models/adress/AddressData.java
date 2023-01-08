@@ -15,7 +15,7 @@ public record AddressData(
         String zip,
         @NotBlank( message = "O número é obrigatório" )
         //@Pattern(regexp = "\\d{1,4}")
-        @Size(min = 1, max = 4)
+        @Size(min = 1, max = 4, message = "O número deve conter até 4 dígitos" )
         @Positive
         String number,
         @NotBlank( message = "O nome da cidade é obrigatório" )
