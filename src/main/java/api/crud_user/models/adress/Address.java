@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Address {
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String street;
     @Column(nullable = false, length = 8)
     private String zip;

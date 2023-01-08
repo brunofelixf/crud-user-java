@@ -1,7 +1,7 @@
 package api.crud_user.models;
 
 import api.crud_user.models.adress.Address;
-import api.crud_user.models.data.UserRegisterData;
+import api.crud_user.models.dto.UserRegisterData;
 import jakarta.persistence.*;
 import lombok.*;
 
