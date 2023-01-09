@@ -8,11 +8,10 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record UserUpdateData(
         @NotNull
-        UUID id,
+        Long id,
         @Pattern(regexp = ".{3,50}")
         String name,
         @Past

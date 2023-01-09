@@ -20,5 +20,9 @@ public record AddressData(
         String number,
         @NotBlank( message = "O nome da cidade é obrigatório" )
         @Pattern(regexp = ".{3,30}")
-        String city) {
+        String city,
+
+        @NotNull
+        Boolean principal
+) {
 }

@@ -1,10 +1,13 @@
 package api.crud_user.controller;
 
+import api.crud_user.models.adress.Address;
 import api.crud_user.models.dto.UserDataList;
 import api.crud_user.models.dto.UserRegisterData;
 import api.crud_user.models.dto.UserUpdateData;
 import api.crud_user.repositories.UserRepository;
 import api.crud_user.models.UserModel;
+import api.crud_user.services.AddressService;
+import api.crud_user.services.UserService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping ("user")
@@ -26,10 +28,20 @@ public class UserController {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AddressService addressService;
+
     @PostMapping
     @Transactional
     public ResponseEntity<UserModel> addUser (@RequestBody @Valid UserRegisterData userData){
-        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(new UserModel(userData)));
+        UserModel user = userService.userSaved(new UserModel(userData));
+        Address address = addressService.addressSaved(new Address(userData.address()));
+        //address.setUser(user);
+        user.setAddress(Collections.singletonList(address));
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @GetMapping
@@ -38,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping ("/{id}")
-    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") Long id){
         Optional<UserDataList> userDataListOptional = repository.findById(id).map(UserDataList::new);
         return userDataListOptional.<ResponseEntity<Object>>
                 map(userDataList -> ResponseEntity.status(HttpStatus.OK).body(userDataList))

@@ -7,29 +7,29 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "user")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class UserModel {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Column(nullable = false, length = 50)
     private String name;
     @Column(nullable = false)
     private LocalDate birthday;
-    @Embedded
-    private Address address;
+    @OneToMany
+    private List<Address> address;
 
     public UserModel(UserRegisterData userData) {
         this.name = userData.name();
         this.birthday = userData.birthday();
-        this.address = new Address(userData.address());
     }
 
     public void update(UserUpdateData data) {
@@ -40,9 +40,7 @@ public class UserModel {
         if(data.birthday()!= null) {
             this.birthday = data.birthday();
         }
-        if(data.address()!= null) {
-            this.address.updateAddress(data.address());
-        }
+        //
 
     }
 }
