@@ -1,4 +1,4 @@
-package api.crud_user.controller;
+package api.crud_user.controllers;
 
 import api.crud_user.dto.user.UserDataList;
 import api.crud_user.dto.user.UserRegisterData;
