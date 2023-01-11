@@ -1,6 +1,6 @@
-package api.crud_user.models.dto;
+package api.crud_user.dto.user;
 
-import api.crud_user.models.adress.AddressData;
+import api.crud_user.dto.adress.AddressData;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

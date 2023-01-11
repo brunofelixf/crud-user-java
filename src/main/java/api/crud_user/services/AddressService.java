@@ -1,6 +1,6 @@
 package api.crud_user.services;
 
-import api.crud_user.models.adress.Address;
+import api.crud_user.models.Address;
 import api.crud_user.repositories.AddressRepository;
 import org.springframework.stereotype.Service;
 

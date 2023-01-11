@@ -1,8 +1,7 @@
 package api.crud_user.models;
 
-import api.crud_user.models.adress.Address;
-import api.crud_user.models.dto.UserRegisterData;
-import api.crud_user.models.dto.UserUpdateData;
+import api.crud_user.dto.user.UserRegisterData;
+import api.crud_user.dto.user.UserUpdateData;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class UserModel {
+public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -27,7 +26,7 @@ public class UserModel {
     @OneToMany
     private List<Address> address;
 
-    public UserModel(UserRegisterData userData) {
+    public User(UserRegisterData userData) {
         this.name = userData.name();
         this.birthday = userData.birthday();
     }

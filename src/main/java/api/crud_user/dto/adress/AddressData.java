@@ -1,4 +1,4 @@
-package api.crud_user.models.adress;
+package api.crud_user.dto.adress;
 
 import jakarta.validation.constraints.*;
 

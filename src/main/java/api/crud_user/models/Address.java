@@ -1,6 +1,6 @@
-package api.crud_user.models.adress;
+package api.crud_user.models;
 
-import api.crud_user.models.UserModel;
+import api.crud_user.dto.adress.AddressData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@Embeddable
 public class Address {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +28,7 @@ public class Address {
     private Boolean principal;
     @ManyToOne
     @JoinColumn(name = "fk_user_id")
-    private UserModel user;
+    private User user;
 
     public Address(AddressData address) {
         this.street = address.street();

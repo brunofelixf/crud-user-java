@@ -1,6 +1,6 @@
 package api.crud_user.services;
 
-import api.crud_user.models.UserModel;
+import api.crud_user.models.User;
 import api.crud_user.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,11 @@ public class UserService {
         this.repository = repository;
     }
 
-    public UserModel userSaved(UserModel userData) {
+    public User userSaved(User userData) {
         return repository.save(userData);
     }
 
-    public UserModel findUser(UserModel userData) {
+    public User findUser(User userData) {
         return repository.findById(userData.getId()).get();
     }
 }

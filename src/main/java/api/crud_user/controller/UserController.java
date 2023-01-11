@@ -1,11 +1,11 @@
 package api.crud_user.controller;
 
-import api.crud_user.models.adress.Address;
-import api.crud_user.models.dto.UserDataList;
-import api.crud_user.models.dto.UserRegisterData;
-import api.crud_user.models.dto.UserUpdateData;
+import api.crud_user.dto.user.UserDataList;
+import api.crud_user.dto.user.UserRegisterData;
+import api.crud_user.dto.user.UserUpdateData;
+import api.crud_user.models.Address;
+import api.crud_user.models.User;
 import api.crud_user.repositories.UserRepository;
-import api.crud_user.models.UserModel;
 import api.crud_user.services.AddressService;
 import api.crud_user.services.UserService;
 import jakarta.transaction.Transactional;
@@ -36,8 +36,8 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<UserModel> addUser (@RequestBody @Valid UserRegisterData userData){
-        UserModel user = userService.userSaved(new UserModel(userData));
+    public ResponseEntity<User> addUser (@RequestBody @Valid UserRegisterData userData){
+        User user = userService.userSaved(new User(userData));
         Address address = addressService.addressSaved(new Address(userData.address()));
         //address.setUser(user);
         user.setAddress(Collections.singletonList(address));
@@ -60,7 +60,7 @@ public class UserController {
     @PutMapping()
     @Transactional
     public ResponseEntity<Optional<UserDataList>> updateUser (@RequestBody @Valid UserUpdateData userData){
-        UserModel user = repository.getReferenceById(userData.id());
+        User user = repository.getReferenceById(userData.id());
         user.update(userData);
         return ResponseEntity.status(HttpStatus.OK).body(repository.findById(userData.id()).map(UserDataList::new));
 
