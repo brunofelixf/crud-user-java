@@ -1,18 +1,14 @@
-package api.crud_user.models;
+package api.crud_user.model;
 
-import api.crud_user.dto.adress.AddressData;
+import api.crud_user.DTO.adress.AddressRegisterDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity(name = "address")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class AddressModel {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,9 +24,9 @@ public class Address {
     private Boolean principal;
     @ManyToOne
     @JoinColumn(name = "fk_user_id")
-    private User user;
+    private UserModel userModel;
 
-    public Address(AddressData address) {
+    public AddressModel(AddressRegisterDto address) {
         this.street = address.street();
         this.zip = address.zip();
         this.number = address.number();
@@ -38,7 +34,7 @@ public class Address {
         this.principal = address.principal();
     }
 
-    public void updateAddress(AddressData address) {
+    public void updateAddress(AddressRegisterDto address) {
         if(address.street()!= null) {
             this.street = address.street();
         }

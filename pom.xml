@@ -11,8 +11,8 @@
     <groupId>api</groupId>
     <artifactId>crud_user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>crud user</name>
-    <description>crud user</description>
+    <name>crud userModel</name>
+    <description>crud userModel</description>
     <properties>
         <java.version>17</java.version>
     </properties>

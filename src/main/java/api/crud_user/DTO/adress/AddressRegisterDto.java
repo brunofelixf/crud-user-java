@@ -1,9 +1,9 @@
-package api.crud_user.dto.adress;
+package api.crud_user.DTO.adress;
 
 import jakarta.validation.constraints.*;
 
 
-public record AddressData(
+public record AddressRegisterDto(
 
         //Utilizei validações por regex ou annotations apenas para exemplificar as duas formas de fazer
 
